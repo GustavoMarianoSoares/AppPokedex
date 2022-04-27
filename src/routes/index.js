@@ -1,22 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import api from '../services/api'
 
 export default function Routes() {
 
-    useEffect(() =>{
-        api.get('1').then((response) => {
-            console.log(response);
-        })
-    }, [])
+  const [pokemons, setPokemons] = useState([])
 
+    useEffect(() =>{
+        api.get('/')
+        .then((response) => {
+          setPokemons(response.data.results)
+      })
+    }, [])
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>TESTE</Text>
-
+      <SafeAreaView>
+        {pokemons.map(pokemons => 
+        <Text>
+          {pokemons.name}{"\n"}
+        </Text>)}
+      </SafeAreaView>
     </View>
   );
 }
