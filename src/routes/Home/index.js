@@ -1,5 +1,7 @@
-import { ScrollView, Text, View, SafeAreaView } from 'react-native';
+import { ScrollView, Text, View, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import { StatusBar } from 'expo-status-bar';
+import styles from "./styles";
 import api from '../../services/api'
 
 export default function Routes() {
@@ -13,14 +15,22 @@ export default function Routes() {
       })
     }, [])
 
+    const showPokemon = (pokemon) =>{
+      Alert.alert('Você clicou em um pokemon',`Ele é o: ${pokemon}`)
+    }
+
   return (
-    <View>
+    <View style={styles.container}>
       <SafeAreaView>
           <ScrollView>
             {pokemons.map(pokemons => 
-            <Text key={pokemons.id}>
+            <TouchableOpacity onPress={() => showPokemon(pokemons.name)}>
+            <Text
+                style={styles.pokeNames}
+                key={pokemons.id}>
                 {pokemons.name}{"\n"}
-            </Text>)}
+            </Text>
+            </TouchableOpacity>)}
         </ScrollView>
       </SafeAreaView>
     </View>
